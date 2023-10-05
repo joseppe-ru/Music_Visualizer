@@ -15,30 +15,32 @@ const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
-//Audio analyse
+//###################################
+//##############Audio################ 
+//###################################
+const audio_file = "./audio.mp3"
+
+//virtueller zuhörer für alle Audioeffekte
 const listener = new THREE.AudioListener();
 camera.add( listener );
 
+//Audioloader zum Laden aller sound-Dateien
+const audioLoader = new THREE.AudioLoader();
+
+//erschaffen, Laden und Spielen des Songs
 const sound = new THREE.Audio( listener );
 
-const audioLoader = new THREE.AudioLoader();
-audioLoader.load( '../audio.mp3', 
-    function( buffer ) {
+//sound-datei laden
+audioLoader.load( audio_file, function( buffer ) {
 	    sound.setBuffer( buffer );
+        sound.setLoop(true);
+        sound.setVolume(0.5);
+        sound.play();
+    });
 
-    },
-	// onProgress callback
-	function ( xhr ) {
-		console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-	},
-
-	// onError callback
-	function ( err ) {
-		console.log( 'An error happened' );
-	}
-);
-
-//Würfel:
+//#########################################
+//##########Geomery########################
+//#########################################
 const geometry = new THREE.BoxGeometry()
 const material = new THREE.MeshBasicMaterial({
     color: 0x00ff00,
@@ -56,19 +58,16 @@ function onWindowResize() {
     render()
 }
 
-function logging(){
-    //pfad von localhsot
-    console.log("local_Path: " + window.location.pathname)
-    sound.play();
-}
-
-//Animation
+//##################################
+//#######Animationsschleife#########
+//##################################
 function animate() {
-    requestAnimationFrame(animate)
+   //requestAnimationFrame(animate)
 
     //Animationsfunktion (vgl. while(true){})
-
-    render()
+//sound.play();
+    renderer.render(scene,camera);
+    requestAnimationFrame(animate);
 }
 
 //renderer funktion
@@ -77,5 +76,3 @@ function render() {
 }
 
 animate()
-
-logging()
