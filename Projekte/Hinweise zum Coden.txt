@@ -8,6 +8,7 @@ Three.js:
     - npm install @types/three --save-dev
     - npm install webpack webpack-cli webpack-dev-server webpack-merge ts-loader --save-dev
     - npm install typescript --save-dev
+    - npm run dev
 
 react:
   - wird von node.js mit installiert
