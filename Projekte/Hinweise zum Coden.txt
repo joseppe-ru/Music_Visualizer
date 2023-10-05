@@ -1,0 +1,14 @@
+Bibliotheken sind Ausgelagert und nicht im Git!!!
+
+Three.js:
+  - https://sbcode.net/threejs/create-threejs-project/
+  - node.js installieren
+  - Biliotheken/module nach installieren [im Ordner des Projektes]
+    - npm install three --save-dev
+    - npm install @types/three --save-dev
+    - npm install webpack webpack-cli webpack-dev-server webpack-merge ts-loader --save-dev
+    - npm install typescript --save-dev
+
+react:
+  - wird von node.js mit installiert
+  - ggf. nötige module nach installieren
