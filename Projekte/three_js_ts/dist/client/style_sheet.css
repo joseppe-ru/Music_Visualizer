@@ -1,0 +1,25 @@
+body {
+    overflow: hidden;
+    margin: 0px;
+}
+
+table{
+    border: 1px solid;
+    width: 100%;
+    height: 60px;
+    z-index: 5;
+}
+tr,th{
+    width: 100px;
+}
+progress{
+    width: 100%;
+}
+
+#animation{
+    z-index: 5;
+}
+
+#control_center{
+    z-index: 1;
+}

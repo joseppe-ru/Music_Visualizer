@@ -6,15 +6,29 @@
         <title>
             Musik
         </title>
-        <style>
-            body {
-                overflow: hidden;
-                margin: 0px;
-            }
-        </style>
+        <link rel="stylesheet" href="style_sheet.css">
+
     </head>
 
     <body>
-        <script type="module" src="bundle.js"></script>
+        <div id="animation">        <script type="module" src="bundle.js"></script></div>
+        <div id="control_center">        <table>
+            <tr>
+                    <th>
+                        <img type="button" id="bt_file" src="/media/svg/mp3_file.svg" />
+                       
+                    </th> 
+                    <th>
+                        <img type="button" id="bt_play" src="/media/svg/play.svg" />
+                        <img type="button" id="bt_pause" src="/media/svg/pause.svg" />
+                        <img type="button" id="bt_stop" src="/media/svg/stop.svg" />
+                    </th>
+                    <th>perf</th>
+            </tr>
+            <tr>
+                <th id="lb_path"></th><th><progress id="bar" value="0.1" max="100"></progress></th>
+            </tr>
+        </table></div>
+
     </body>
 </html>
