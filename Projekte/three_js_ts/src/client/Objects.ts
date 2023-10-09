@@ -24,8 +24,8 @@ export class Object_Creator{
         //Music-Visualisierungs effekte
 
         //music analyzer
-        const analyzer = new THREE.AudioAnalyser(sound,512)
-        const data = analyzer.getFrequencyData()     
+        //const analyzer = new THREE.AudioAnalyser(sound,512)
+        //const data = analyzer.getFrequencyData()     
         
     }
 

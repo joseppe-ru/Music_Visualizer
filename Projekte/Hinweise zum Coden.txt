@@ -9,7 +9,11 @@ Three.js:
     - npm install webpack webpack-cli webpack-dev-server webpack-merge ts-loader --save-dev
     - npm install typescript --save-dev
     - npm run dev
-
+    - npm install --global http-server
+    - npm run build     
+        (->bundel.js)
+    - http-server ./dist/client
+     
 react:
   - wird von node.js mit installiert
   - ggf. nötige module nach installieren

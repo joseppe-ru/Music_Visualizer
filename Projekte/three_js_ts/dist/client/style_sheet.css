@@ -4,7 +4,7 @@ body {
 }
 
 table{
-    border: 1px solid;
+
     width: 100%;
     height: 60px;
     z-index: 10;
@@ -12,6 +12,7 @@ table{
 }
 
 tr,th{
+    position: relative;
     max-width: 100px;
     width: 100px;
 }
@@ -22,48 +23,36 @@ progress{
 }
 
 img{
-    filter: blur(1px);
+    border-radius: 10px;
+    transition: blur 1s, background-color 1s;
 }
 
 img:hover{
-    animation: fadeIn 500ms;
     background-color:rgb(255, 255, 255);
     border-radius: 10px;
-    filter: blur(0px);
+    filter: blur(2px);
+    transition: blur 1s, background-color 1s;
 }
 
-@keyframes fadeIn {
-    0% { opacity: 0.3; filter: blur(2px);}
-    100% { opacity: 0.7; filter: blur(0px);}
-  }
 
 #control_center{
     z-index: 10;
     background: radial-gradient(circle, rgb(52, 128, 37) 0%, rgba(119,38,38,1) 100%);
     opacity: 30%;
     position: fixed;
-    animation: floatOut 1s;
-    top:-60px;
-    left: 0;
-    width: 100%;
-    text-align: center;
+    animation: floatOut 500ms linear;
+    width: 80%;
+    left: 10%;
+    top: -40px;
     border-radius: 18px;
-}
-@keyframes floatOut{
-    0%{top: 0;opacity: 70%;}
-    100%{top: -60px;opacity: 30%;}
+    transition: top 1s, opacity 1s;
 }
 
 #control_center:hover{
-    animation: floatIn 1s;
+    animation: floatIn 500ms linear;
     top: 0;
-    left: 0;
-    opacity: 75%;
-}
-
-@keyframes floatIn{
-    0%{top: -60px;opacity: 30%;}
-    100%{top: 0;opacity: 70%;}
+    opacity: 80%;
+    transition: top 1s, opacity 1s;
 }
 
 canvas{
@@ -78,4 +67,8 @@ canvas{
 
 #lb_path{
     color: white;
+}
+
+#perf_dom{
+    left: 100px;
 }
