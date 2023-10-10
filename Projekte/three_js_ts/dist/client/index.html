@@ -7,16 +7,16 @@
             Musik
         </title>
         <link rel="stylesheet" href="style_sheet.css">
-        <div id="control_center">        <table>
-            <tr>
+        <div id="control_center">        
+            <table>
+                <tr>
                     <th>
                         <img title="Load Pre-Installed Audio-File" type="button" id="bt_file" src="/media/svg/mp3_file.svg"/>
-
                         <a title="Select Audio-File" class="file_upload">
-                            <label id="bt_upload" for="file-input">
+                            <label id="bt_upload" for="file_input">
                                 <img src="/media/svg/upload.svg"/>
                             </label>
-                            <input id="file-input" type="file" accept="audio/*,.mp3" />
+                            <input id="file_input" type="file" accept="audio/*,.mp3" />
                         </a>
                         <!--<input type="file" id="bt_upload" src="/media/svg/upload.svg"/>-->
                     </th> 
@@ -25,12 +25,13 @@
                         <img title="Pause" type="button" id="bt_pause" src="/media/svg/pause.svg" />
                         <img title="Stop" type="button" id="bt_stop" src="/media/svg/stop.svg" />
                     </th>
-                    <th>perf </th>
-            </tr>
-            <tr>
-                <th id="lb_path"></th><!--<th><progress id="bar" value="0.1" max="100" ></progress>--></th>
-            </tr>
-        </table></div>
+                    <th>perf</th>
+                </tr>
+                <tr>
+                    <th id="lb_path"></th><!--<th><progress id="bar" value="0.1" max="100" ></progress>--></th>
+                </tr>
+            </table>
+        </div>
     </head>
 
     <body>

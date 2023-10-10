@@ -27,33 +27,35 @@
 
 import * as THREE from 'three'
 import { Event_Handler } from './handling';
-import { Object_Creator } from './Objects';
-
 
     //Scene
-const scene = new THREE.Scene()
+const Scene = new THREE.Scene()
     //Kamera
-const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000)
-camera.position.z = 2
+const Camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000)
+Camera.position.z = 30
     //Renderer
-const renderer = new THREE.WebGLRenderer()
-renderer.setSize(window.innerWidth, window.innerHeight)
-document.body.appendChild(renderer.domElement)
+const Renderer = new THREE.WebGLRenderer()
+Renderer.setSize(window.innerWidth, window.innerHeight)
+document.body.appendChild(Renderer.domElement)
+    //AudioListener
+const Listener = new THREE.AudioListener()
+Camera.add(Listener)
 
-    //Button handler initialisieren
-var Handler = new Event_Handler()
-
-camera.add(  )
-
+/**# Handlings
+ * =>initialize:
+ *  - Button-event-handlers
+ *  - Objects
+ *  - Audio-Processing
+ */
+var Handler = new Event_Handler(Scene,Listener)  
 
     //Animationsschleife
-function animate() {
-
+function Animate() {
     //Visualisierung
-    Handler.Visualize()
-    renderer.render(scene,camera);
-    requestAnimationFrame(animate);
+    Handler.Animate()
+    Renderer.render(Scene,Camera);
+    requestAnimationFrame(Animate);
 }
 
     //animationsschleife starten
-animate()
+Animate()

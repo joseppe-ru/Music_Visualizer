@@ -17,11 +17,6 @@ tr,th{
     width: 100px;
 }
 
-progress{
-    width: 100%;
-    filter: blur(0.5px);
-}
-
 img{
     border-radius: 10px;
     transition: blur 1s, background-color 1s;
@@ -37,13 +32,13 @@ img:hover{
 
 #control_center{
     z-index: 10;
-    background: radial-gradient(circle, rgb(52, 128, 37) 0%, rgba(119,38,38,1) 100%);
+    background: radial-gradient(circle, rgb(52, 128, 37) 30%, rgb(215, 170, 252) 100%);
     opacity: 30%;
     position: fixed;
     animation: floatOut 500ms linear;
     width: 80%;
     left: 10%;
-    top: -40px;
+    top: -30px;
     border-radius: 18px;
     transition: top 1s, opacity 1s;
 }
@@ -51,24 +46,10 @@ img:hover{
 #control_center:hover{
     animation: floatIn 500ms linear;
     top: 0;
-    opacity: 80%;
+    opacity: 70%;
     transition: top 1s, opacity 1s;
-}
-
-canvas{
-    width:100%;
-    height: 100%;
-    z-index: 0;
 }
 
 .file_upload>input{
     display:none;
-}
-
-#lb_path{
-    color: white;
-}
-
-#perf_dom{
-    left: 100px;
 }
