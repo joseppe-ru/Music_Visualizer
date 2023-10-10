@@ -1,31 +1,5 @@
-/** Allgemeine Funktionen...
- * # Initialisierungen:
- *  - Scene
- *  - camera
- *  - Objekte (ausgelagerte Datei)
- * 
- * # Event handling:
- *  - Buttons
- *  - ende des Songs
- *  - Frontend-elemente (progressbar, pfad-textfeld, perf)
- * 
- * # Steuern:
- *  - Analyse ansteueren (eigene Datei)
- *  - Animation der Objekte zur Musik (Logik ausgelagert)
- *  - 
-*/
-
-/**
- * # Scenen Definitionen und initialisieurungen und Einstiegspunkt
- *  - Camera
- *  - Renderer
- *  - 3D-Objekte
- *  - Audio-Listener 
-*/
-
-//TODO: Audio Loader, Audio usw ordentlich zurücksetzten
-
 import * as THREE from 'three'
+import { Audio_Processing } from './processing';
 import { Event_Handler } from './handling';
 
     //Scene
@@ -41,18 +15,22 @@ document.body.appendChild(Renderer.domElement)
 const Listener = new THREE.AudioListener()
 Camera.add(Listener)
 
+
+
 /**# Handlings
  * =>initialize:
  *  - Button-event-handlers
  *  - Objects
  *  - Audio-Processing
  */
-var Handler = new Event_Handler(Scene,Listener)  
+
+var Visualizer = new Audio_Processing(Scene,Listener,128)
+var Handler = new Event_Handler(Visualizer)  
 
     //Animationsschleife
 function Animate() {
     //Visualisierung
-    Handler.Animate()
+    Visualizer.Visualize()
     Renderer.render(Scene,Camera);
     requestAnimationFrame(Animate);
 }

@@ -78,6 +78,9 @@ export class Audio_Processing{
         this.Music.stop()
         this.Listener.remove()
         //TODO: zurücksetzten des Visualisierers
+        for (let i=0;i<this.Objects.length;i++){
+        this.Objects[i].position.y=0
+        }
     }
     
     /**Visualisierung steuern
@@ -101,8 +104,9 @@ export class Audio_Processing{
         this.Analyser_Data=this.Analyzer.getFrequencyData()
         
         for (let i=0;i<this.Objects.length;i++){
-            this.Objects[i].position.y=this.Analyser_Data[i]/10
+            this.Objects[i].position.y=this.Analyser_Data[i]/100
         }
+        console.log(this.Analyser_Data)
     }
 
     Animate_Idle=()=>{
@@ -114,7 +118,6 @@ export class Audio_Processing{
             else{
                 this.Objects[i].position.y=0
             }
-            
         }
 
     }

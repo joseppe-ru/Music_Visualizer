@@ -1,23 +1,17 @@
-import * as THREE from 'three'
 /**
  * Event-Handling
  *  - Buttons
  */
 
+import { Audio } from 'three';
 import { Audio_Processing } from './processing';
 
 export class Event_Handler{
-
-    Listener:THREE.AudioListener;
-    Szene:THREE.Scene;
-
-    Music_Control:Audio_Processing;
-
-    constructor(scene:THREE.Scene, listener:THREE.AudioListener)
+    Visualizer:Audio_Processing
+    constructor(visualizer:Audio_Processing)
     {
-        this.Listener = listener    //lsitener für three.sound
-        this.Szene = scene            //scene für objekte
-        this.Music_Control = new Audio_Processing(scene, listener,256)//ruft init dieser Klasse auf
+
+        this.Visualizer=visualizer
 
         //play button handler initialisieren
         let bt_play= document.getElementById("bt_play")
@@ -47,29 +41,29 @@ export class Event_Handler{
     event_bt_play=()=>{
         //musik und visualisierung starten
         console.log("Event Start_Button")
-        this.Music_Control.Play_Music()
+        this.Visualizer.Play_Music()
     }
 
     event_bt_pause=()=>{
         //musik anhalten, visualisierung zurücksetzten
         console.log("Event Pause_Button")
-        this.Music_Control.Pause_Music()
+        this.Visualizer.Pause_Music()
     }
 
     event_bt_stop=()=>{
         //reset, musik stopp und animation beenden
         console.log("Event Stop_Button")
-        this.Music_Control.Reset_Music()
+        this.Visualizer.Reset_Music()
     }
 
     event_bt_file=()=>{
-        this.Music_Control.Reset_Music()
+        this.Visualizer.Reset_Music()
         console.log("Event File_Button")
-        this.Music_Control.Load_Music("./media/audio/audio.mp3","Bella_Ciao")
+        this.Visualizer.Load_Music("./media/audio/audio.mp3","Bella_Ciao")
     }
 
     event_bt_upload=()=>{
-        this.Music_Control.Reset_Music()
+        this.Visualizer.Reset_Music()
         //MP3-Datei hochladen / Pfad ermitteln
         let fileInput = document.getElementById("file_input") as HTMLInputElement;
         var mp3_file = "404_File_Not_Found"
@@ -85,11 +79,6 @@ export class Event_Handler{
             }
         }
         console.log(mp3_file)
-        this.Music_Control.Load_Music(mp3_file)
+        this.Visualizer.Load_Music(mp3_file)
     }
-
-    Animate=()=>{
-        this.Music_Control.Visualize()
-    }
-
 }
