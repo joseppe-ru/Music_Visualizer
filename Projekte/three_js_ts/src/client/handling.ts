@@ -56,13 +56,13 @@ export class Event_Handler{
     }
 
     event_bt_file=()=>{
-        this.Visualizer.Reset_Music()
+        //this.Visualizer.Reset_Music()
         console.log("Event File_Button")
         this.Visualizer.Load_Music("./media/audio/audio.mp3","Bella_Ciao")
     }
 
     event_bt_upload=()=>{
-        this.Visualizer.Reset_Music()
+        //this.Visualizer.Reset_Music()
         //MP3-Datei hochladen / Pfad ermitteln
         let fileInput = document.getElementById("file_input") as HTMLInputElement;
         var mp3_file = "404_File_Not_Found"

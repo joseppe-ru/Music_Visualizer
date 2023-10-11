@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { randnum } from './global_functions'
+
 /** # Audio Control
  *  - start, stop, pause
  *  - sound laden
@@ -11,7 +12,7 @@ export class Audio_Processing{
 
     //Scene
     Scene:THREE.Scene
-    Objects:THREE.Mesh[]
+    Objects:THREE.Line[]
     //Audio
     Music:THREE.Audio
     Listener:THREE.AudioListener
@@ -36,22 +37,32 @@ export class Audio_Processing{
         //helpers
         this.Threshold=170
         //Initialisierung
-        this.Create_Objects()       //init funktion
+        this.Create_Objects(3,5)       //init funktion
     }
 
-    Create_Objects=()=>{
-        
+    Create_Objects=(r_min:number,r_max:number)=>{
+        const geometry = new THREE.BufferGeometry()
+        const material = new THREE.LineBasicMaterial({color:0x27fd52})
+        var x:number,y:number,z:number,teta:number,phi:number
+        const points:THREE.Vector3[]=[];
+        const leangth=0.5;
+
         //würfel für Visualisierung
-        for (let i=0;i<this.FFT_Size/2;i++){
-            const geometry = new THREE.BoxGeometry(1,1,1,1,1,1)
-            const material = new THREE.MeshBasicMaterial({
-            color: 0x00ff00,
-            })
-    
-            this.Objects.push(new THREE.Mesh(geometry,material))
-            this.Objects[i].position.x=-this.FFT_Size/4+i
+        for (let i=0;i<100;i++){
+            teta = randnum(2*Math.PI,-2*Math.PI)
+            phi = randnum(2*Math.PI,-2*Math.PI)
+            x=Math.sin(teta)*Math.sin(phi)
+            y=Math.cos(teta)*Math.cos(phi)
+            z=Math.sin(teta)*Math.cos(phi)
+            //Start und endvektoren für Linie erstellen (random)
+            points.push(new THREE.Vector3(x,y,z).normalize().multiplyScalar(r_min))
+            points.push(new THREE.Vector3(x,y,z).normalize().multiplyScalar(r_max))
+            //neue Linie als THREE Element zu Objects hinzufügen
+            this.Objects.push(new THREE.LineSegments(geometry.setFromPoints(points),new THREE.LineBasicMaterial({color:0x27fd52})))
+            //zur Szene hinzufügen
             this.Scene.add(this.Objects[i])
         }
+        
 
         ////Hilfslinie
         //const points = []
@@ -65,18 +76,18 @@ export class Audio_Processing{
         //let thisSound = this.Music
         this.Music_Loader.load( path, ( buffer )=> {
             setTimeout(()=>{
-                const music_context=this.Music.context
-                const filter=music_context.createBiquadFilter()
-                filter.type='lowpass'
-                filter.frequency.setValueAtTime(200,music_context.currentTime+2000)
-
-                this.Music.setBuffer( buffer );
+                //    //filtern:...
+                //const music_context=this.Music.context
+                //const filter=music_context.createBiquadFilter()
+                //filter.type='lowpass'
+                //filter.frequency.setValueAtTime(200,music_context.currentTime+2000)
+                //this.Music.setFilter(filter)
+                //this.Music.setBuffer( buffer );
                 
                 this.Music.setLoop(true);
                 this.Music.setVolume(1);
                 this.Analyzer=new THREE.AudioAnalyser(this.Music,this.FFT_Size)
                 this.Music.play()
-                //this.Music.setFilter(filter)
             },0);
 
 
@@ -98,14 +109,11 @@ export class Audio_Processing{
     }
     
     Reset_Music=()=>{
-        //this.Listener.clear()
-        //this.Music.clear()
-        //this.Music.remove()
-        //this.Music.stop()
-        //this.Listener.remove()
-        //TODO: zurücksetzten des Visualisierers
+        this.Music.stop()
+
+        //zurücksetzten des Visualisierers
         for (let i=0;i<this.Objects.length;i++){
-        this.Objects[i].scale.y=0
+        //this.Objects[i].scale.y=0
         }
     }
     
@@ -130,15 +138,15 @@ export class Audio_Processing{
     Animate_Visualisation=(sound:THREE.Audio)=>{
 
         this.Analyser_Data=this.Analyzer.getFrequencyData()
+        //const cur_pos:THREE.Vector3 = new THREE.Vector3()
         
         for (let i=0;i<this.Objects.length;i++){
             //Animation für alle Objekte
-            //this.Objects[i].position.y=this.Analyser_Data[i]
-            //this.Objects[i].scale.length=this.Analyser_Data[i]
-            this.Objects[i].scale.y=this.Analyser_Data[i]                        
+            //this.Objects[i].position.multiplyScalar(0.1)                         
         }
         if(this.Analyser_Data[0]>this.Threshold){
             //Kick-Animation für Beat -> Bloom oder aufleuchten
+            //in alle Richtungen weg fliegen
         }
     }
 
@@ -146,12 +154,12 @@ export class Audio_Processing{
 
         for (let i=0;i<this.Objects.length;i++){
             //Animation für alle Objekte
-            if(!(this.Objects[i].scale.y<=0)){
-                this.Objects[i].scale.y-=0.3
-            }
-            else{
-                this.Objects[i].scale.y=0
-            }
+            //if(!(this.Objects[i].scale.y<=0)){
+            //    this.Objects[i].scale.y-=0.3
+            //}
+            //else{
+            //    this.Objects[i].scale.y=0
+            //}
         }
 
     }

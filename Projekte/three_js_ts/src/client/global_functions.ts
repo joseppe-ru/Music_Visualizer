@@ -30,3 +30,10 @@ export const getPeaks=(data:[],threshold:number)=>{
     }
     return peaksArray;
 };
+
+interface RandnumProps{
+    (max:number, min:number):number;
+}
+export let randnum: RandnumProps =(max:number,min:number) =>{
+    return (Math.random() * (max - min) + min);
+}
