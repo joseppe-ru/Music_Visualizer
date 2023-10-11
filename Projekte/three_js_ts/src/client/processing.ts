@@ -1,35 +1,51 @@
 import * as THREE from 'three'
 
+/** # Audio Control
+ *  - start, stop, pause
+ *  - sound laden
+ *  # Scene
+ *  - Objekte erschaffen
+ *  - Animations/Visualisierungsschleifen
+ */
 export class Audio_Processing{
 
+    //Scene
     Scene:THREE.Scene
     Objects:THREE.Mesh[]
+    //Audio
     Music:THREE.Audio
     Listener:THREE.AudioListener
     Music_Loader:THREE.AudioLoader
     Analyzer:THREE.AudioAnalyser
     Analyser_Data:any
     FFT_Size:number
+    //helpers
+    Threshold:number
 
     constructor(scene:THREE.Scene, listener:THREE.AudioListener, fft_size:number){
-        this.Scene=scene            //für Objekte
+        //Scene
+        this.Scene=scene            
+        this.Objects=[]  
+        //Audio
         this.Listener=listener
         this.FFT_Size=fft_size
-        this.Objects=[]  //3D Objekte
         this.Music_Loader=new THREE.AudioLoader
-        this.Music=new THREE.Audio(listener)
+        this.Music=new THREE.Audio(listener)                
+        this.Analyzer = new THREE.AudioAnalyser(this.Music) //Analyser AIPI
+        this.Analyser_Data = []     //Daten beinhalten FFT-Analyse
+        //helpers
+        this.Threshold=170
+        //Initialisierung
         this.Create_Objects()       //init funktion
-        this.Analyzer = new THREE.AudioAnalyser(this.Music)
-        this.Analyser_Data = []
     }
 
     Create_Objects=()=>{
         
+        //würfel für Visualisierung
         for (let i=0;i<this.FFT_Size/2;i++){
             const geometry = new THREE.BoxGeometry(1,1,1,1,1,1)
             const material = new THREE.MeshBasicMaterial({
             color: 0x00ff00,
-            wireframe: true,
             })
     
             this.Objects.push(new THREE.Mesh(geometry,material))
@@ -37,18 +53,30 @@ export class Audio_Processing{
             this.Scene.add(this.Objects[i])
         }
 
+        ////Hilfslinie
+        //const points = []
+        //points.push(new THREE.Vector3(600,this.Threshold,0));
+        //points.push(new THREE.Vector3(-600,this.Threshold,0));
+        //this.Scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),new THREE.LineBasicMaterial({color:0x0000ff})))
     }
      
     Load_Music=(path:string,name?:string)=>{
         //Audio Laden
-        let thisSound = this.Music;
+        //let thisSound = this.Music
         this.Music_Loader.load( path, ( buffer )=> {
             setTimeout(()=>{
+                const music_context=this.Music.context
+                const filter=music_context.createBiquadFilter()
+                filter.type='lowpass'
+                filter.frequency.setValueAtTime(200,music_context.currentTime+2000)
+
                 this.Music.setBuffer( buffer );
+                
                 this.Music.setLoop(true);
                 this.Music.setVolume(1);
                 this.Analyzer=new THREE.AudioAnalyser(this.Music,this.FFT_Size)
                 this.Music.play()
+                //this.Music.setFilter(filter)
             },0);
 
 
@@ -59,8 +87,6 @@ export class Audio_Processing{
         //Pfad/Name der Datei anzeigen
         const lb_path = document.getElementById("lb_path") as HTMLParagraphElement
         lb_path.textContent=name
-
-        console.log(this.Analyzer.data)
     }
     
     Play_Music=()=>{
@@ -72,21 +98,23 @@ export class Audio_Processing{
     }
     
     Reset_Music=()=>{
-        this.Listener.clear()
-        this.Music.clear()
-        this.Music.remove()
-        this.Music.stop()
-        this.Listener.remove()
+        //this.Listener.clear()
+        //this.Music.clear()
+        //this.Music.remove()
+        //this.Music.stop()
+        //this.Listener.remove()
         //TODO: zurücksetzten des Visualisierers
         for (let i=0;i<this.Objects.length;i++){
-        this.Objects[i].position.y=0
+        this.Objects[i].scale.y=0
         }
     }
     
-    /**Visualisierung steuern
-     * 
+    /** # Visualisierung steuern
+     *  - idle (wenn keine Musik spielt)
+     *  - Visualisierung (wenn Musik spielt)
      */
     Visualize=()=>{
+        //TODO: ist Audio schon geladen??
         if(this.Music.isPlaying){
             //animation für visualisierung
             this.Animate_Visualisation(this.Music)
@@ -104,19 +132,25 @@ export class Audio_Processing{
         this.Analyser_Data=this.Analyzer.getFrequencyData()
         
         for (let i=0;i<this.Objects.length;i++){
-            this.Objects[i].position.y=this.Analyser_Data[i]/100
+            //Animation für alle Objekte
+            //this.Objects[i].position.y=this.Analyser_Data[i]
+            //this.Objects[i].scale.length=this.Analyser_Data[i]
+            this.Objects[i].scale.y=this.Analyser_Data[i]                        
         }
-        console.log(this.Analyser_Data)
+        if(this.Analyser_Data[0]>this.Threshold){
+            //Kick-Animation für Beat -> Bloom oder aufleuchten
+        }
     }
 
     Animate_Idle=()=>{
 
         for (let i=0;i<this.Objects.length;i++){
-            if(!(this.Objects[i].position.y<=0)){
-                this.Objects[i].position.y-=0.1
+            //Animation für alle Objekte
+            if(!(this.Objects[i].scale.y<=0)){
+                this.Objects[i].scale.y-=0.3
             }
             else{
-                this.Objects[i].position.y=0
+                this.Objects[i].scale.y=0
             }
         }
 

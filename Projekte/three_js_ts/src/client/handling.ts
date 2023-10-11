@@ -1,11 +1,10 @@
-/**
- * Event-Handling
- *  - Buttons
- */
-
-import { Audio } from 'three';
 import { Audio_Processing } from './processing';
 
+/** # Event-Handling
+ *  - Button-event-handlers
+ *  - Verweise auf eigene Audio-Control Klasse für start,stop,...
+ *  - Dateien Pfade ermitteln
+ */
 export class Event_Handler{
     Visualizer:Audio_Processing
     constructor(visualizer:Audio_Processing)

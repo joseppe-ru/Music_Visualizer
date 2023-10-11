@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { Audio_Processing } from './processing';
 import { Event_Handler } from './handling';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
     //Scene
 const Scene = new THREE.Scene()
@@ -15,25 +16,24 @@ document.body.appendChild(Renderer.domElement)
 const Listener = new THREE.AudioListener()
 Camera.add(Listener)
 
+//TODO: Helfer zum schluss wieder entfernen
+    //zum frei navigieren / herumschwenken
+new OrbitControls(Camera, Renderer.domElement);
+    //Grid & Axen 
+Scene.add(new THREE.GridHelper(250, 10),new THREE.AxesHelper( 5 ));
 
+//Eigene Klassen
+var Visualizer = new Audio_Processing(Scene,Listener,2048)
+new Event_Handler(Visualizer)  
 
-/**# Handlings
- * =>initialize:
- *  - Button-event-handlers
- *  - Objects
- *  - Audio-Processing
- */
-
-var Visualizer = new Audio_Processing(Scene,Listener,128)
-var Handler = new Event_Handler(Visualizer)  
-
-    //Animationsschleife
+//Animationsschleife
 function Animate() {
     //Visualisierung
     Visualizer.Visualize()
+
     Renderer.render(Scene,Camera);
     requestAnimationFrame(Animate);
 }
 
-    //animationsschleife starten
+//Animationsschleife starten (Einstiegspunkt)
 Animate()
