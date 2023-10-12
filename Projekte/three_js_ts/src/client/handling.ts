@@ -58,7 +58,7 @@ export class Event_Handler{
     event_bt_file=()=>{
         //this.Visualizer.Reset_Music()
         console.log("Event File_Button")
-        this.Visualizer.Load_Music("./media/audio/audio.mp3","Bella_Ciao")
+        this.Visualizer.Load_Music("./media/audio/ncs_audio.mp3","Maazel - To Be Loved")
     }
 
     event_bt_upload=()=>{
@@ -66,18 +66,18 @@ export class Event_Handler{
         //MP3-Datei hochladen / Pfad ermitteln
         let fileInput = document.getElementById("file_input") as HTMLInputElement;
         var mp3_file = "404_File_Not_Found"
-        var name = null
+        var name = "null"
         if(fileInput != null){
             if(fileInput.files !=null){
                 var item = fileInput.files.item(0)
                 console.log(item)
                 if(item!= null){
                     mp3_file = URL.createObjectURL(item)
-                    name=item.name
+                    name=fileInput.files[0].name
                 }
             }
         }
         console.log(mp3_file)
-        this.Visualizer.Load_Music(mp3_file)
+        this.Visualizer.Load_Music(mp3_file,name)
     }
-}
+} 

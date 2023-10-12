@@ -7,7 +7,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 const Scene = new THREE.Scene()
     //Kamera
 const Camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000)
-Camera.position.z = 30
+Camera.position.z = 230
     //Renderer
 const Renderer = new THREE.WebGLRenderer()
 Renderer.setSize(window.innerWidth, window.innerHeight)
@@ -15,7 +15,7 @@ document.body.appendChild(Renderer.domElement)
     //AudioListener
 const Listener = new THREE.AudioListener()
 Camera.add(Listener)
-
+ 
 //TODO: Helfer zum schluss wieder entfernen
     //zum frei navigieren / herumschwenken
 new OrbitControls(Camera, Renderer.domElement);
@@ -30,10 +30,17 @@ new Event_Handler(Visualizer)
 function Animate() {
     //Visualisierung
     Visualizer.Visualize()
-
+    setTimeout(nullfn,1000);
     Renderer.render(Scene,Camera);
     requestAnimationFrame(Animate);
 }
 
+function nullfn(){
+
+}
+
+//TODO: alert (disclaimer) wieder einblenden)
+//alert("Die Bedienelemente erscheinen am Oberen Fensterrand")
+//alert("Disclaimer: Die von Uns verwendete Musik ist offiziell als NCS(no copyright sound) freigegeben")
 //Animationsschleife starten (Einstiegspunkt)
 Animate()

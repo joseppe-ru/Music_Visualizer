@@ -23,28 +23,44 @@ img{
 }
 
 img:hover{
+    animation: shake 0.6s cubic-bezier(.38,.07,.19,.97) both;
     background-color:rgb(255, 255, 255);
     border-radius: 10px;
     filter: blur(2px);
     transition: blur 1s, background-color 1s;
 }
 
+@keyframes shake {
+    10%, 50%, 90% {
+      transform: translate3d(-1px, 1px, 0);
+    }
+    
+    20%, 60% {
+      transform: translate3d(1px, -1px, -0);
+    }
+  
+    30%, 70% {
+      transform: translate3d(-1px, 1 px, 0);
+    }
+  
+    40%, 80% {
+      transform: translate3d(1px, -1px, 0);
+    }
+  }
 
 #control_center{
     z-index: 10;
-    background: radial-gradient(circle, rgb(52, 128, 37) 30%, rgb(215, 170, 252) 100%);
-    opacity: 30%;
+    background: radial-gradient(circle, rgb(145, 197, 255) 30%, rgb(37, 114, 128) 100%);
+    opacity: 20%;
     position: fixed;
-    animation: floatOut 500ms linear;
     width: 80%;
     left: 10%;
-    top: -30px;
+    top: -35px;
     border-radius: 18px;
     transition: top 1s, opacity 1s;
 }
 
 #control_center:hover{
-    animation: floatIn 500ms linear;
     top: 0;
     opacity: 70%;
     transition: top 1s, opacity 1s;
@@ -53,3 +69,4 @@ img:hover{
 .file_upload>input{
     display:none;
 }
+ 
