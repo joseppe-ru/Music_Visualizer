@@ -27,6 +27,8 @@ export class Event_Handler{
         //file-input button handler initialisieren
         let bt_upload= document.getElementById("file_input")
         bt_upload?.addEventListener("change",(e:Event)=>this.event_bt_upload(),false);
+        //Tastaturevent
+        addEventListener("keydown",(e:Event)=>this.event_keypress(e),false);
     }
 
 /** Button Handler funktionen
@@ -37,31 +39,31 @@ export class Event_Handler{
  *  - event_bt_upload
  * */
 
-    event_bt_play=()=>{
+    private event_bt_play(){
         //musik und visualisierung starten
         console.log("Event Start_Button")
         this.Visualizer.Play_Music()
     }
 
-    event_bt_pause=()=>{
+    private event_bt_pause(){
         //musik anhalten, visualisierung zurücksetzten
         console.log("Event Pause_Button")
         this.Visualizer.Pause_Music()
     }
 
-    event_bt_stop=()=>{
+    private event_bt_stop(){
         //reset, musik stopp und animation beenden
         console.log("Event Stop_Button")
         this.Visualizer.Reset_Music()
     }
 
-    event_bt_file=()=>{
+    private event_bt_file(){
         //this.Visualizer.Reset_Music()
         console.log("Event File_Button")
         this.Visualizer.Load_Music("./media/audio/ncs_audio.mp3","Maazel - To Be Loved")
     }
 
-    event_bt_upload=()=>{
+    private event_bt_upload(){
         //this.Visualizer.Reset_Music()
         //MP3-Datei hochladen / Pfad ermitteln
         let fileInput = document.getElementById("file_input") as HTMLInputElement;
@@ -79,5 +81,9 @@ export class Event_Handler{
         }
         console.log(mp3_file)
         this.Visualizer.Load_Music(mp3_file,name)
+    }
+
+    private event_keypress(e:Event){
+        this.Visualizer.Pause_Music()
     }
 } 

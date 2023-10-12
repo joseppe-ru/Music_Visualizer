@@ -2,12 +2,13 @@ import * as THREE from 'three'
 import { Audio_Processing } from './processing';
 import { Event_Handler } from './handling';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { Scenaries, Cube_Scenary, Sphere_Senary } from './Scenaries'
 
     //Scene
 const Scene = new THREE.Scene()
     //Kamera
 const Camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000)
-Camera.position.z = 230
+Camera.position.z = 300
     //Renderer
 const Renderer = new THREE.WebGLRenderer()
 Renderer.setSize(window.innerWidth, window.innerHeight)
@@ -19,23 +20,23 @@ Camera.add(Listener)
 //TODO: Helfer zum schluss wieder entfernen
     //zum frei navigieren / herumschwenken
 new OrbitControls(Camera, Renderer.domElement);
-    //Grid & Axen 
-Scene.add(new THREE.GridHelper(250, 10),new THREE.AxesHelper( 5 ));
+    //Grid & Axen helper
+//Scene.add(new THREE.GridHelper(250, 10),new THREE.AxesHelper( 5 ));
 
 //Eigene Klassen
-var Visualizer = new Audio_Processing(Scene,Listener,2048)
+const fft_size=2048
+const Szenario = new Cube_Scenary(Scene,Camera, fft_size/2)
+const Visualizer = new Audio_Processing(Listener,Szenario,fft_size)
 new Event_Handler(Visualizer)  
 
 //Animationsschleife
 function Animate() {
     //Visualisierung
+    
     Visualizer.Visualize()
-    setTimeout(nullfn,1000);
     Renderer.render(Scene,Camera);
-    requestAnimationFrame(Animate);
-}
+    requestAnimationFrame( Animate );
 
-function nullfn(){
 
 }
 

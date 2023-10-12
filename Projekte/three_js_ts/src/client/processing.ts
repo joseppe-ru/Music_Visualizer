@@ -1,24 +1,26 @@
 import * as THREE from 'three'
-import { Scenaries, Cube_Scenary, Sphere_Senary } from './Scenaries';
+import { Scenaries } from './Scenaries'
+
 /** # Audio Control
- *  - start, stop, pause
+ *  - start 
+ *  - stop
+ *  - pause
  *  - sound laden
- *  # Scene
- *  - Objekte erschaffen
- *  - Animations/Visualisierungsschleifen
- * @note Das Szenario wird im Contruktor ausgewählt (Object_Scenary)
+ *  - Visualisierung steuern (nach stand der Musik) 
+ *  - Audio FFT-Analyse
  */
 export class Audio_Processing{
 
-    Object_Scenary:Scenaries<THREE.Object3D>
     //Audio
     Music:THREE.Audio
     Music_Loader:THREE.AudioLoader
     Analyzer:THREE.AudioAnalyser
     Analyser_Data:any
     FFT_Size:number
+    //Szenario
+    Szenario:Scenaries<THREE.Object3D>
 
-    constructor(scene:THREE.Scene, listener:THREE.AudioListener, fft_size:number){
+    constructor(listener:THREE.AudioListener, szenario:Scenaries<THREE.Object3D>,fft_size:number){
         //Audio
         this.FFT_Size=fft_size
         this.Music_Loader=new THREE.AudioLoader
@@ -27,20 +29,14 @@ export class Audio_Processing{
         this.Analyser_Data = []     //Daten beinhalten FFT-Analyse
 
         //Initialisierung der Objekte
-        this.Object_Scenary=new Cube_Scenary(scene,this.FFT_Size)
-        //this.Object_Scenary=new Sphere_Senary(scene,100,5,100)
+        this.Szenario=szenario
     }
      
-    Load_Music=(path:string,name?:string)=>{
+    Load_Music(path:string,name?:string){
         this.Reset_Music()
         //Audio Laden
         this.Music_Loader.load( path, ( buffer )=> {
             setTimeout(()=>{
-                //const music_context=this.Music.context
-                //const filter=music_context.createBiquadFilter()
-                //filter.type='lowpass'
-                //filter.frequency.setValueAtTime(200,music_context.currentTime+2000)
-                ////this.Music.setFilter(filter)
                 this.Music.setBuffer( buffer );
                 this.Music.setLoop(true);
                 this.Music.setVolume(1);
@@ -57,43 +53,38 @@ export class Audio_Processing{
         lb_path.textContent=name
     }
     
-    Play_Music=()=>{
+    Play_Music(){
         this.Music.play()
     }
 
-    Pause_Music=()=>{
+    Pause_Music(){
         this.Music.pause()
     }
     
-    Reset_Music=()=>{
+    Reset_Music(){
         this.Music.stop()
-        //this.Listener.clear()
-        //this.Music.clear()
-        //this.Music.remove()
-        //this.Listener.remove()
 
-        this.Object_Scenary.Animate_Reset()
+        this.Szenario.Animate_Reset()
     }
     
     /** # Visualisierung steuern
      *  - idle (wenn keine Musik spielt)
      *  - Visualisierung (wenn Musik spielt)
      */
-    Visualize=()=>{
+    async Visualize(){
+
         //TODO: ist Audio schon geladen??
         if(this.Music.isPlaying){
 
             //FFT-Analyse 
-            this.Analyser_Data=this.Analyzer.getFrequencyData()
         
             //Darstellung der analysierten Daten
-            this.Object_Scenary.Animate_Visualisation(this.Analyser_Data)
-            
+            this.Szenario.Animate_Visualisation(this.Analyzer.getFrequencyData(),this.Analyzer.getAverageFrequency())
         }
         else
         {
             //leerlauf-Animation
-            this.Object_Scenary.Animate_Idle()
+            this.Szenario.Animate_Idle()
         }
     }
 
