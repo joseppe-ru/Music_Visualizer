@@ -28,7 +28,9 @@ export class Event_Handler{
         let bt_upload= document.getElementById("file_input")
         bt_upload?.addEventListener("change",(e:Event)=>this.event_bt_upload(),false);
         //Tastaturevent
-        addEventListener("keydown",(e:Event)=>this.event_keypress(e),false);
+        addEventListener("keypress",(e:KeyboardEvent)=>this.event_keypress(e),false);
+        //Resize (drehen vom handy/Bowserfenster verschieben/Element untersuchen....)
+        addEventListener("resize",(e:Event)=>this.event_resize(e),false)
     }
 
 /** Button Handler funktionen
@@ -83,7 +85,22 @@ export class Event_Handler{
         this.Visualizer.Load_Music(mp3_file,name)
     }
 
-    private event_keypress(e:Event){
-        this.Visualizer.Pause_Music()
+    private event_keypress(e:KeyboardEvent){
+        console.log(e)
+        if(e.code=="Space"){
+            this.Visualizer.Toggle_Music()
+        }
+        else if(e.code=="ArrowUp"||e.code=="ArrowRight"){
+            this.Visualizer.Toggle_Scene(1)
+        }
+        else if(e.code=="ArrowUp"||e.code=="ArrowRight"){
+            this.Visualizer.Toggle_Scene(0)
+        }
+        console.log(e)
+    }
+
+    private event_resize(e:Event){
+        //location.reload()
+        console.log(e)
     }
 } 

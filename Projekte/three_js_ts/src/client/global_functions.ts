@@ -37,3 +37,21 @@ interface randProps{
 export var randnum:randProps =(max=-1,min=1):number =>{
     return (Math.random() * (max - min) + min);
 }
+
+export enum Enum_Visual_Method{
+    Muster1 = 0,
+    Muster2,
+    Muster3,
+    Muster4,
+    Muster5,
+    Muster6,
+    Muster7,
+    Muster8,
+    Muster9,
+    Muster10,
+    Muster11,
+    Muster12,
+    Muster13,
+    Muster14,
+    Muster15
+}

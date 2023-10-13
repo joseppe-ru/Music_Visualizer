@@ -18,9 +18,9 @@ export class Audio_Processing{
     Analyser_Data:any
     FFT_Size:number
     //Szenario
-    Szenario:Scenaries<THREE.Object3D>
+    Szenarios:Scenaries<THREE.Object3D>[]
 
-    constructor(listener:THREE.AudioListener, szenario:Scenaries<THREE.Object3D>,fft_size:number){
+    constructor(listener:THREE.AudioListener, szenario:Scenaries<THREE.Object3D>[],fft_size:number){
         //Audio
         this.FFT_Size=fft_size
         this.Music_Loader=new THREE.AudioLoader
@@ -29,7 +29,7 @@ export class Audio_Processing{
         this.Analyser_Data = []     //Daten beinhalten FFT-Analyse
 
         //Initialisierung der Objekte
-        this.Szenario=szenario
+        this.Szenarios=szenario
     }
      
     Load_Music(path:string,name?:string){
@@ -64,27 +64,69 @@ export class Audio_Processing{
     Reset_Music(){
         this.Music.stop()
 
-        this.Szenario.Animate_Reset()
+        for(let i=0;i<this.Szenarios.length;i++){
+            this.Szenarios[i].Animate_Reset()
+        }
+    }
+
+    Toggle_Music(){
+        if(this.Music.isPlaying){
+            this.Music.pause()
+        }
+        else{
+            this.Music.play()
+        }
     }
     
+    Toggle_Scene(flag:number){
+        if(flag==0){
+            //eins nach oben springen   
+            for(let i=0;i<this.Szenarios.length;i++){
+                if(this.Szenarios[i].Enum_Method==14){
+                    this.Szenarios[i].Enum_Method=0
+                }
+                else{
+                    this.Szenarios[i].Enum_Method+=1
+                }     
+            }
+        }
+        else{
+            //eins zurück springen
+            for(let i=0;i<this.Szenarios.length;i++){
+                if(this.Szenarios[i].Enum_Method==0){
+                    this.Szenarios[i].Enum_Method=14
+                }
+                else{
+                    this.Szenarios[i].Enum_Method-=1
+                }     
+            }
+        }
+
+    }
     /** # Visualisierung steuern
      *  - idle (wenn keine Musik spielt)
      *  - Visualisierung (wenn Musik spielt)
      */
-    async Visualize(){
+    Visualize(){
 
         //TODO: ist Audio schon geladen??
         if(this.Music.isPlaying){
 
             //FFT-Analyse 
-        
+            var data = this.Analyzer.getFrequencyData()
+            var freq = this.Analyzer.getAverageFrequency()
             //Darstellung der analysierten Daten
-            this.Szenario.Animate_Visualisation(this.Analyzer.getFrequencyData(),this.Analyzer.getAverageFrequency())
+            for(let i=0;i<this.Szenarios.length;i++){
+                this.Szenarios[i].Animate_Visualisation(data,freq)
+            }
         }
         else
         {
             //leerlauf-Animation
-            this.Szenario.Animate_Idle()
+            for(let i=0;i<this.Szenarios.length;i++){
+                this.Szenarios[i].Animate_Idle()
+            }
+
         }
     }
 
