@@ -47,7 +47,7 @@ export class Scenaries<T extends THREE.Object3D>{
     public Animate_Visualisation(data:Uint8Array,freq:number){/*console.log("super_Animate_Visu")*/}
 
     public Animate_Idle(){/*console.log("super_Animate_idle")*/
-        //this.Camera.rotation.z+=0.001
+        this.Camera.rotation.z+=0.001
     }
 
     public Animate_Reset(){/*console.log("super_Animate_Reset")*/
@@ -127,76 +127,73 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
                         this.Objects[i].position.y=Math.cos(i*i/20)*data[i]/2            
                         break;
                     case 3:
-                                    //Muster4 -> viereck wusel
-            this.Objects[i].position.x=Math.sin(randnum()*data[i])*data[i]/2 
-            this.Objects[i].position.y=Math.sin(randnum()*data[i])*data[i]/2 
+                        //Muster4 -> viereck wusel
+                        this.Objects[i].position.x=Math.sin(randnum()*data[i])*data[i]/2 
+                        this.Objects[i].position.y=Math.sin(randnum()*data[i])*data[i]/2 
                         break;
                     case 4:
+                        //Muster5 -> gemächlicher Kreis
+                        this.Objects[i].position.x=Math.sin(i*2)*(data[i]*data[i])/200
+                        this.Objects[i].position.y=Math.cos(i*2)*(data[i]*data[i])/200
                         break;
                     case 5:
+                        //Muster6 -> gemächlicher Kreis, mehr so striche (Sonne)
+                        this.Objects[i].position.x=Math.sin(Math.PI+i)*(data[i]*data[i])/i
+                        this.Objects[i].position.y=Math.cos(Math.PI+i)*(data[i]*data[i])/i   
                         break;                    
                     case 6:
+                        //Muster7 -> Spirale (Galaxy) (wackelt bissl im Takt) (geordnet) (Hintergrundmuster)
+                        this.Objects[i].position.x=Math.sin(Math.PI+i)*(i*i)/data[i]
+                        this.Objects[i].position.y=Math.cos(Math.PI+i)*(i*i)/data[i] 
                         break;
                     case 7:
+                                    //Muster8 -> Stern
+                        this.Objects[i].position.x=Math.asin(i/this.Object_Count)*Math.sin(i*2)*data[i]
+                        this.Objects[i].position.y=Math.acos(i/this.Object_Count)*Math.cos(i*2)*data[i]
                         break;
                     case 8:
+                        //Muster10 -> cooler anderer Stern
+                        this.Objects[i].position.x=Math.asin(i/this.Object_Count)*Math.cos(i*2)*data[i]
+                        this.Objects[i].position.y=Math.acos(i/this.Object_Count)*Math.sin(i*2)*data[i]
                         break;
                     case 9:
+                        //Muster11 -> cooles Oval, wenig streuung, (Trapez mit ovalförmigen Loch in der Mitte)
+                        this.Objects[i].position.x=Math.asin(data[i]/256)*Math.cos(i*2)*data[i]
+                        this.Objects[i].position.y=Math.acos(data[i]/256)*Math.sin(i*2)*data[i]
                         break;                    
                     case 10:
+                        //Muster12 -> krasseres Oval mit Muster/Strichen in Mitte 
+                        this.Objects[i].position.x=Math.asin(data[i]/256 *i/this.Object_Count)*Math.cos(i*2)*data[i]
+                        this.Objects[i].position.y=Math.acos(data[i]/256 *i/this.Object_Count)*Math.sin(i*2)*data[i]
                         break;
                     case 11:
+                        //Muster13 -> krasseres Blatt (sehr anstrengend für PC),(wird niedriger, je Lauter aber breiter) (im ganzen jedoch wenig motion)
+                        this.Objects[i].position.x=(Math.asin(data[i]/256 *i/this.Object_Count)*Math.cos(i*2)*i)/5
+                        this.Objects[i].position.y=(Math.acos(data[i]/256 *i/this.Object_Count)*Math.sin(i*2)*i)/5
                         break;
                     case 12:
+                        //Muster14 -> Wahnisinnig krankes Muster (aber leider Satisch) (Saphir)
+                        this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.cos(i*2)*i)/5
+                        this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.sin(i*2)*i)/5
                         break;
                     case 13:
+                        //Muster15 -> wild gewelltes Blatt
+                        this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.cos((data[i]))*i)/5
+                        this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.sin((data[i]))*i)/5
+                        //this.Objects[i].position.z=(Math.atan(i/this.Object_Count)*Math.sin((data[i]))*i)/5
                         break;                    
                     case 14:
+                        //Muster15 -> wild gewelltes Blatt
+                        this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.sin((data[i]))*i)/5
+                        this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.cos((data[i]))*i)/5
                         break;
                         
                 }
 
                 //länge nach Lautstärke
-            //this.Objects[i].scale.z= data[i]/10  
+            this.Objects[i].scale.z= data[i]/10  
                 //je leiser, desto weiter weg
-            //this.Objects[i].position.z = -(255-data[i])/2 
-
-
-            ////Muster5 -> gemächlicher Kreis
-            //this.Objects[i].position.x=Math.sin(i*2)*(data[i]*data[i])/200
-            //this.Objects[i].position.y=Math.cos(i*2)*(data[i]*data[i])/200
-            ////Muster6 -> gemächlicher Kreis, mehr so striche (Sonne)
-            //this.Objects[i].position.x=Math.sin(Math.PI+i)*(data[i]*data[i])/i
-            //this.Objects[i].position.y=Math.cos(Math.PI+i)*(data[i]*data[i])/i     
-            ////Muster7 -> Spirale (Galaxy) (wackelt bissl im Takt) (geordnet) (Hintergrundmuster)
-            //this.Objects[i].position.x=Math.sin(Math.PI+i)*(i*i)/data[i]
-            //this.Objects[i].position.y=Math.cos(Math.PI+i)*(i*i)/data[i]       
-            ////Muster8 -> Stern
-            //this.Objects[i].position.x=Math.asin(i/this.Object_Count)*Math.sin(i*2)*data[i]
-            //this.Objects[i].position.y=Math.acos(i/this.Object_Count)*Math.cos(i*2)*data[i]
-            ////Muster10 -> cooler anderer Stern
-            //this.Objects[i].position.x=Math.asin(i/this.Object_Count)*Math.cos(i*2)*data[i]
-            //this.Objects[i].position.y=Math.acos(i/this.Object_Count)*Math.sin(i*2)*data[i]
-            ////Muster11 -> cooles Oval, wenig streuung, (Trapez mit ovalförmigen Loch in der Mitte)
-            //this.Objects[i].position.x=Math.asin(data[i]/256)*Math.cos(i*2)*data[i]
-            //this.Objects[i].position.y=Math.acos(data[i]/256)*Math.sin(i*2)*data[i]
-            ////Muster12 -> krasseres Oval mit Muster/Strichen in Mitte 
-            //this.Objects[i].position.x=Math.asin(data[i]/256 *i/this.Object_Count)*Math.cos(i*2)*data[i]
-            //this.Objects[i].position.y=Math.acos(data[i]/256 *i/this.Object_Count)*Math.sin(i*2)*data[i]
-            ////Muster13 -> krasseres Blatt (sehr anstrengend für PC),(wird niedriger, je Lauter aber breiter) (im ganzen jedoch wenig motion)
-            //this.Objects[i].position.x=(Math.asin(data[i]/256 *i/this.Object_Count)*Math.cos(i*2)*i)/5
-            //this.Objects[i].position.y=(Math.acos(data[i]/256 *i/this.Object_Count)*Math.sin(i*2)*i)/5
-            ////Muster14 -> Wahnisinnig krankes Muster (aber leider Satisch) (Saphir)
-            //this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.cos(i*2)*i)/5
-            //this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.sin(i*2)*i)/5
-            ////Muster15 -> wild gewelltes Blatt
-            //this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.cos((data[i]))*i)/5
-            //this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.sin((data[i]))*i)/5
-            //this.Objects[i].position.z=(Math.atan(i/this.Object_Count)*Math.sin((data[i]))*i)/5
-            //Muster15 -> wild gewelltes Blatt
-            this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.sin((data[i]))*i)/5
-            this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.cos((data[i]))*i)/5
-
+            this.Objects[i].position.z = -(255-data[i])/2 
 
             //Farbe verändern
             var red, green, blue 
@@ -210,7 +207,7 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
         }
 
         //Rotation
-        //this.Camera.rotation.z+=(data[200]/4000)
+        this.Camera.rotation.z+=(data[200]/4000)
         this.Camera.position.z=200+ (data[0]*data[0])/2000 + data[510]/10
 
         if(data[0]>170){
@@ -320,7 +317,7 @@ export class freq_bar_Scenary extends Scenaries<THREE.Mesh>{
 
     public Animate_Idle() {
         //super.Animate_Idle()
-        //this.Group.rotation.z+=0.001
+        this.Group.rotation.z+=0.001
         for (let i=0;i<this.Objects.length;i++){
             if(this.Objects[i].scale.y>0.1)
                 this.Objects[i].scale.y-=0.2

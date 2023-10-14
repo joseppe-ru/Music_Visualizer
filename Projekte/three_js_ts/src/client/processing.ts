@@ -86,18 +86,18 @@ export class Audio_Processing{
                     this.Szenarios[i].Enum_Method=0
                 }
                 else{
-                    this.Szenarios[i].Enum_Method+=1
+                    this.Szenarios[i].Enum_Method-=1
                 }     
             }
         }
-        else{
+        else if(flag==1){
             //eins zurück springen
             for(let i=0;i<this.Szenarios.length;i++){
                 if(this.Szenarios[i].Enum_Method==0){
                     this.Szenarios[i].Enum_Method=14
                 }
                 else{
-                    this.Szenarios[i].Enum_Method-=1
+                    this.Szenarios[i].Enum_Method+=1
                 }     
             }
         }
