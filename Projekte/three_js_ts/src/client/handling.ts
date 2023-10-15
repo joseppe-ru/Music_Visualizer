@@ -90,13 +90,20 @@ export class Event_Handler{
         if(e.code=="Space"){
             this.Visualizer.Toggle_Music()
         }
+        else if(e.code.substring(0,5)=="Digit"){
+            console.log(+e.key)
+            //this.Visualizer.Toggle_Scene(+e.key)
+        }
+        else if(e.code.substring(0,3)=="Key"){
+            console.log(+e.key)
+            //this.Visualizer.Toggle_Scene(+e.key)
+        }
         else if(e.code=="ArrowUp"||e.code=="ArrowRight"){
-            this.Visualizer.Toggle_Scene(1)
+            this.Visualizer.Toggle_Scene(+1)
         }
         else if(e.code=="ArrowDown"||e.code=="ArrowLeft"){
-            this.Visualizer.Toggle_Scene(0)
+            this.Visualizer.Toggle_Scene(-1)
         }
-        console.log(e)
     }
 
     private event_resize(e:Event){

@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { randnum, Enum_Visual_Method } from './global_functions';
-//TODO: Camera rotation wieder einschalten
 
 /**
  * # Szenarien für die Visualisierung
@@ -20,7 +19,6 @@ export class Scenaries<T extends THREE.Object3D>{
     Objects:T[]
     Group:THREE.Mesh
     Light:THREE.AmbientLight
-    inc:number
     Enum_Method:Enum_Visual_Method
     constructor(scene:THREE.Scene,camera:THREE.Camera,count:number){
         //Scene
@@ -35,10 +33,8 @@ export class Scenaries<T extends THREE.Object3D>{
         this.Group=new THREE.Mesh()
         //ambienteLight
         this.Light=new THREE.AmbientLight(0xffffff,3)
-        //increment für muster
-        this.inc=0
         //
-        this.Enum_Method=0
+        this.Enum_Method=Enum_Visual_Method.Muster0_std_kreis
     }
 
     //allgemeine Funktionen für alle Kindklassen/Scenarien
@@ -102,92 +98,69 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
 
     public Animate_Visualisation(data:Uint8Array,freq:number){
         super.Animate_Visualisation(data,freq)
-        if (this.inc<500000){
-            this.inc+=10
-        }
-        else(
-            this.inc=0
-        )
+        
+
         for (let i=0;i<this.Objects.length;i++){
             //Animation für alle Objekte
                 switch (this.Enum_Method){
-                    case 0:
-                        //Muster1 -> regulärer Kreis
-                        this.Objects[i].position.x=Math.sin(i*2)*data[i]/2
-                        this.Objects[i].position.y=Math.cos(i*2)*data[i]/2 
+                    case Enum_Visual_Method.Muster0_std_kreis:
+                        this.Objects[i].position.x=Math.sin(i)*data[i]/2
+                        this.Objects[i].position.y=Math.cos(i)*data[i]/2 
                         break;
-                    case 1:
-                        //Muster2 -> schneller Kreis
-                        this.Objects[i].position.x=Math.sin(i*data[i])*data[i]/2
-                        this.Objects[i].position.y=Math.cos(i*data[i])*data[i]/2 
+                    case Enum_Visual_Method.Muster1_invers_kreis:
+                        this.Objects[i].position.x=Math.sin(i*2)*(255-data[i])/2
+                        this.Objects[i].position.y=Math.cos(i*2)*(255-data[i])/2 
                         break;                    
-                    case 2:
-                        //Muster3 -> Raute
+                    case Enum_Visual_Method.Muster2_raute:
                         this.Objects[i].position.x=Math.sin(i*data[i]/20)*data[i]/2 
                         this.Objects[i].position.y=Math.cos(i*i/20)*data[i]/2            
                         break;
-                    case 3:
-                        //Muster4 -> viereck wusel
-                        this.Objects[i].position.x=Math.sin(randnum()*data[i])*data[i]/2 
-                        this.Objects[i].position.y=Math.sin(randnum()*data[i])*data[i]/2 
-                        break;
-                    case 4:
-                        //Muster5 -> gemächlicher Kreis
-                        this.Objects[i].position.x=Math.sin(i*2)*(data[i]*data[i])/200
-                        this.Objects[i].position.y=Math.cos(i*2)*(data[i]*data[i])/200
-                        break;
-                    case 5:
-                        //Muster6 -> gemächlicher Kreis, mehr so striche (Sonne)
+                    case Enum_Visual_Method.Muster3_sun_like:
                         this.Objects[i].position.x=Math.sin(Math.PI+i)*(data[i]*data[i])/i
                         this.Objects[i].position.y=Math.cos(Math.PI+i)*(data[i]*data[i])/i   
-                        break;                    
-                    case 6:
-                        //Muster7 -> Spirale (Galaxy) (wackelt bissl im Takt) (geordnet) (Hintergrundmuster)
+                        break;
+                    case Enum_Visual_Method.Muster4_spirale:
                         this.Objects[i].position.x=Math.sin(Math.PI+i)*(i*i)/data[i]
                         this.Objects[i].position.y=Math.cos(Math.PI+i)*(i*i)/data[i] 
                         break;
-                    case 7:
-                                    //Muster8 -> Stern
+                    case Enum_Visual_Method.Muster5_star1:
                         this.Objects[i].position.x=Math.asin(i/this.Object_Count)*Math.sin(i*2)*data[i]
                         this.Objects[i].position.y=Math.acos(i/this.Object_Count)*Math.cos(i*2)*data[i]
-                        break;
-                    case 8:
-                        //Muster10 -> cooler anderer Stern
+                        break;                    
+                    case Enum_Visual_Method.Muster6_star2:
                         this.Objects[i].position.x=Math.asin(i/this.Object_Count)*Math.cos(i*2)*data[i]
                         this.Objects[i].position.y=Math.acos(i/this.Object_Count)*Math.sin(i*2)*data[i]
                         break;
-                    case 9:
-                        //Muster11 -> cooles Oval, wenig streuung, (Trapez mit ovalförmigen Loch in der Mitte)
+                    case Enum_Visual_Method.Muster7_std_auge:
                         this.Objects[i].position.x=Math.asin(data[i]/256)*Math.cos(i*2)*data[i]
                         this.Objects[i].position.y=Math.acos(data[i]/256)*Math.sin(i*2)*data[i]
-                        break;                    
-                    case 10:
-                        //Muster12 -> krasseres Oval mit Muster/Strichen in Mitte 
+                        break;
+                    case Enum_Visual_Method.Muster8_schmal_auge:
                         this.Objects[i].position.x=Math.asin(data[i]/256 *i/this.Object_Count)*Math.cos(i*2)*data[i]
                         this.Objects[i].position.y=Math.acos(data[i]/256 *i/this.Object_Count)*Math.sin(i*2)*data[i]
                         break;
-                    case 11:
-                        //Muster13 -> krasseres Blatt (sehr anstrengend für PC),(wird niedriger, je Lauter aber breiter) (im ganzen jedoch wenig motion)
+                    case Enum_Visual_Method.Muster9_blatt:
                         this.Objects[i].position.x=(Math.asin(data[i]/256 *i/this.Object_Count)*Math.cos(i*2)*i)/5
                         this.Objects[i].position.y=(Math.acos(data[i]/256 *i/this.Object_Count)*Math.sin(i*2)*i)/5
-                        break;
-                    case 12:
-                        //Muster14 -> Wahnisinnig krankes Muster (aber leider Satisch) (Saphir)
+
+                        break;                    
+                    case Enum_Visual_Method.Muster10_saphire:
                         this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.cos(i*2)*i)/5
                         this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.sin(i*2)*i)/5
+
                         break;
-                    case 13:
-                        //Muster15 -> wild gewelltes Blatt
+                    case Enum_Visual_Method.Muster11_spahire_fixed:
                         this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.cos((data[i]))*i)/5
                         this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.sin((data[i]))*i)/5
-                        //this.Objects[i].position.z=(Math.atan(i/this.Object_Count)*Math.sin((data[i]))*i)/5
-                        break;                    
-                    case 14:
-                        //Muster15 -> wild gewelltes Blatt
-                        this.Objects[i].position.x=(Math.asin(i/this.Object_Count)*Math.sin((data[i]))*i)/5
-                        this.Objects[i].position.y=(Math.acos(i/this.Object_Count)*Math.cos((data[i]))*i)/5
                         break;
-                        
+                    case Enum_Visual_Method.Muster12_reinverse_kreis:
+                        this.Objects[i].position.x=Math.sin(i*2)*Math.abs((128-data[i]))/2
+                        this.Objects[i].position.y=Math.cos(i*2)*Math.abs((128-data[i]))/2 
+                        break;
+                    case Enum_Visual_Method.Muster13:
+                        break;                    
+                    case Enum_Visual_Method.Muster14:
+                        break;
                 }
 
                 //länge nach Lautstärke
@@ -205,6 +178,7 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
             this.Objects[i].material=new THREE.MeshLambertMaterial({color: new THREE.Color(red,green,blue)}) 
 
         }
+        
 
         //Rotation
         this.Camera.rotation.z+=(data[200]/4000)
@@ -218,6 +192,7 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
 
     Animate_Idle(){
         super.Animate_Idle()
+
         for (let i=0;i<this.Objects.length;i++){
             //Animation für alle Objekte
             if(this.Objects[i].position.y>0.2 || this.Objects[i].position.y<-0.2){
@@ -227,7 +202,8 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
                 else{
                     this.Objects[i].position.y+=0.5
                 }
-            }
+            }else{this.Objects[i].position.y=window.innerHeight*randnum()}
+
             if(this.Objects[i].position.x>0.2 || this.Objects[i].position.x<-0.2){
                 if(this.Objects[i].position.x>0){
                     this.Objects[i].position.x-=0.5
@@ -235,8 +211,11 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
                 else{
                     this.Objects[i].position.x+=0.5
                 }
-            }
+            }else{this.Objects[i].position.x=window.innerWidth*randnum()}
         }
+
+        //mit vektoren berechnen
+        
     }
 
     Animate_Reset(){

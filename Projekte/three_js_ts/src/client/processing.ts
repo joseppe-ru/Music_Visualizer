@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { Scenaries } from './Scenaries'
+import { Enum_Visual_Method } from './global_functions'
 
 /** # Audio Control
  *  - start 
@@ -79,30 +80,16 @@ export class Audio_Processing{
     }
     
     Toggle_Scene(flag:number){
-        if(flag==0){
-            //eins nach oben springen   
-            for(let i=0;i<this.Szenarios.length;i++){
-                if(this.Szenarios[i].Enum_Method==14){
-                    this.Szenarios[i].Enum_Method=0
-                }
-                else{
-                    this.Szenarios[i].Enum_Method-=1
-                }     
+        let index:number=this.Szenarios[0].Enum_Method + flag
+        
+        for(let i=0;i<this.Szenarios.length;i++){
+            if ((index<15)&&(index>-1)){
+                this.Szenarios[i].Enum_Method=index
             }
+            else{break;}
         }
-        else if(flag==1){
-            //eins zurück springen
-            for(let i=0;i<this.Szenarios.length;i++){
-                if(this.Szenarios[i].Enum_Method==0){
-                    this.Szenarios[i].Enum_Method=14
-                }
-                else{
-                    this.Szenarios[i].Enum_Method+=1
-                }     
-            }
-        }
-
     }
+
     /** # Visualisierung steuern
      *  - idle (wenn keine Musik spielt)
      *  - Visualisierung (wenn Musik spielt)

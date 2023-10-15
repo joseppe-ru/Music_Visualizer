@@ -1,0 +1,3 @@
+drehrichtung mausbasiert
+Tastengeräusche
+schmoofe übergänge von Muster zu Muster

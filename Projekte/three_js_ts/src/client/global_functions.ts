@@ -39,19 +39,19 @@ export var randnum:randProps =(max=-1,min=1):number =>{
 }
 
 export enum Enum_Visual_Method{
-    Muster1 = 0,
-    Muster2,
-    Muster3,
-    Muster4,
-    Muster5,
-    Muster6,
-    Muster7,
-    Muster8,
-    Muster9,
-    Muster10,
-    Muster11,
-    Muster12,
+    Muster0_std_kreis = 0,
+    Muster1_invers_kreis,
+    Muster2_raute,
+    Muster3_sun_like,
+    Muster4_spirale,
+    Muster5_star1,
+    Muster6_star2,
+    Muster7_std_auge,
+    Muster8_schmal_auge,
+    Muster9_blatt,
+    Muster10_saphire,
+    Muster11_spahire_fixed,
+    Muster12_reinverse_kreis,
     Muster13,
-    Muster14,
-    Muster15
+    Muster14
 }

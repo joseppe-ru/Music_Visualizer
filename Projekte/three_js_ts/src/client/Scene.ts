@@ -37,12 +37,13 @@ composer.addPass(effectpass)
 //Eigene Klassen
 const fft_size=2048
 const cube_scene = new Cube_Scenary(scene,camera, fft_size/4)
-const rreq_bar_scene = new freq_bar_Scenary(scene,camera,fft_size/2)
+const req_bar_scene = new freq_bar_Scenary(scene,camera,fft_size/2)
+//const sphere = new Sphere_Senary(scene,camera,fft_size/2,3,4)
 //new helper_Scenary(Scene,Camera,fft_size)
 //new light_Scenary(Scene,Camera)
 var scenaries:Scenaries<THREE.Object3D>[]=[]
 scenaries.push(cube_scene)
-scenaries.push(rreq_bar_scene)
+scenaries.push(req_bar_scene)
 const visualizer = new Audio_Processing(listener,scenaries,fft_size)
 new Event_Handler(visualizer)  
 
