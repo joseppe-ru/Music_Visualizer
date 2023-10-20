@@ -70,8 +70,8 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
 
             this.Objects.push(new THREE.Mesh(geometry,material))
 
-            this.Objects[i].position.x=randnum()*i
-            this.Objects[i].position.y=randnum()*i
+            this.Objects[i].position.x=randnum(400,-400)
+            this.Objects[i].position.y=randnum(400,-400)
             this.Objects[i].position.z=randnum(100,-200)
 
             this.Group.add(this.Objects[i])
@@ -192,29 +192,24 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
 
     Animate_Idle(){
         super.Animate_Idle()
-
+        //aktueller Vektor für Objekt
+        var cur_vector:THREE.Vector3
+        var null_vec =new THREE.Vector3(0,0,0)
         for (let i=0;i<this.Objects.length;i++){
-            //Animation für alle Objekte
-            if(this.Objects[i].position.y>0.2 || this.Objects[i].position.y<-0.2){
-                if(this.Objects[i].position.y>0){
-                    this.Objects[i].position.y-=0.5
-                }
-                else{
-                    this.Objects[i].position.y+=0.5
-                }
-            }else{this.Objects[i].position.y=window.innerHeight*randnum()}
+            //XYZ-Vektor ermitteln
+            cur_vector=this.Objects[i].position
+            if(this.Objects[i].position.x>1|| this.Objects[i].position.y>1||this.Objects[i].position.z>1){
+                cur_vector.divideScalar(1+((1/this.Objects[i].position.distanceTo(null_vec))/2))
+                //cur_vector.subScalar(1)
+                this.Objects[i].position.set(cur_vector.x,cur_vector.y,cur_vector.z)
+            }
+            else{//random verteilen
+                this.Objects[i].position.x=randnum(400,-400)
+                this.Objects[i].position.y=randnum(400,-400)
+                this.Objects[i].position.z=randnum(100,-400)
+            }
 
-            if(this.Objects[i].position.x>0.2 || this.Objects[i].position.x<-0.2){
-                if(this.Objects[i].position.x>0){
-                    this.Objects[i].position.x-=0.5
-                }
-                else{
-                    this.Objects[i].position.x+=0.5
-                }
-            }else{this.Objects[i].position.x=window.innerWidth*randnum()}
         }
-
-        //mit vektoren berechnen
         
     }
 

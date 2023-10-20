@@ -20,6 +20,7 @@ export class Audio_Processing{
     FFT_Size:number
     //Szenario
     Szenarios:Scenaries<THREE.Object3D>[]
+    Enum_Leangth:number
 
     constructor(listener:THREE.AudioListener, szenario:Scenaries<THREE.Object3D>[],fft_size:number){
         //Audio
@@ -29,8 +30,9 @@ export class Audio_Processing{
         this.Analyzer = new THREE.AudioAnalyser(this.Music) //Analyser AIPI
         this.Analyser_Data = []     //Daten beinhalten FFT-Analyse
 
-        //Initialisierung der Objekte
+        //Objekte / Szenario
         this.Szenarios=szenario
+        this.Enum_Leangth=Object.keys(Enum_Visual_Method).length
     }
      
     Load_Music(path:string,name?:string){
@@ -83,7 +85,7 @@ export class Audio_Processing{
         let index:number=this.Szenarios[0].Enum_Method + flag
         
         for(let i=0;i<this.Szenarios.length;i++){
-            if ((index<15)&&(index>-1)){
+            if ((index<this.Enum_Leangth+1)&&(index>-1)){
                 this.Szenarios[i].Enum_Method=index
             }
             else{break;}

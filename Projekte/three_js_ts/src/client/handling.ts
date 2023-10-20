@@ -55,6 +55,8 @@ export class Event_Handler{
 
     private event_bt_stop(){
         //reset, musik stopp und animation beenden
+        R2D2 ausraster scream Soundeffect
+        https://youtu.be/8qokt65f20o
         console.log("Event Stop_Button")
         this.Visualizer.Reset_Music()
     }
