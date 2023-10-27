@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { Scenaries } from './Scenaries'
-import { Enum_Visual_Method } from './global_functions'
+import { Enum_Visual_Method } from './Global_Collection'
 
 /** # Audio Control
  *  - start 
@@ -115,9 +115,7 @@ export class Audio_Processing{
             for(let i=0;i<this.Szenarios.length;i++){
                 this.Szenarios[i].Animate_Idle()
             }
-
         }
     }
-
 }
 

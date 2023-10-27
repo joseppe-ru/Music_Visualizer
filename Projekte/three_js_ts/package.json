@@ -14,14 +14,15 @@
   "devDependencies": {
     "@types/three": "^0.156.0",
     "three": "^0.157.0",
-    "ts-loader": "^9.4.4",
+    "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
-    "webpack-merge": "^5.9.0"
+    "webpack-merge": "^5.10.0"
   },
   "dependencies": {
-    "@react-three/drei": "^9.88.0"
+    "@react-three/drei": "^9.88.0",
+    "postprocessing": "^6.33.2"
   }
 }

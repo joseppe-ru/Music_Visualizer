@@ -1,5 +1,6 @@
 //TODO: nicht bnutzte Funktionen wieder entfernen
 
+//noch keine verwendung
 export const visibleHeightAtZDepth = ( depth:number, camera:any ) => {
     // compensate for cameras not positioned at z=0
     const cameraOffset = camera.position.z;
@@ -13,11 +14,13 @@ export const visibleHeightAtZDepth = ( depth:number, camera:any ) => {
     return 2 * Math.tan( vFOV / 2 ) * Math.abs( depth );
 };
   
+//noch keine verwendung
 export const visibleWidthAtZDepth = ( depth:number, camera:any ) => {
     const height = visibleHeightAtZDepth( depth, camera );
     return height * camera.aspect;
 };
 
+//noch keine verwendung
 export const getPeaks=(data:[],threshold:number)=>{
     var peaksArray = [];
     for(var i = 0; i < data.length;) {
@@ -31,13 +34,21 @@ export const getPeaks=(data:[],threshold:number)=>{
     return peaksArray;
 };
 
-interface randProps{
-  (max?:number,min?:number):number
-}
-export var randnum:randProps =(max=-1,min=1):number =>{
+/**
+ *  # Zufallsgenerator
+ * @param max obere Grenze, oder 1
+ * @param min untere Grenze, oder -1
+ * @returns zufällige Zahl zwischen max und min
+ */
+export var randnum =(max=-1,min=1):number =>{
     return (Math.random() * (max - min) + min);
 }
 
+/**
+ * Liste mit Visualisierungsmethoden 
+ *  - zum durchiterieren
+ *  - zum Unterscheiden nach Namen -> der Einfachkeit halber gegen Verwirrung
+ */
 export enum Enum_Visual_Method{
     Muster0_std_kreis = 0,
     Muster1_invers_kreis,

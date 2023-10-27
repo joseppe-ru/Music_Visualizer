@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { randnum, Enum_Visual_Method } from './global_functions';
+import { randnum, Enum_Visual_Method } from './Global_Collection';
 
 /**
  * # Szenarien für die Visualisierung
@@ -65,7 +65,7 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
         for (let i=0;i<this.Object_Count;i++){//1/2 FFT size
             const geometry = new THREE.BoxGeometry(2,2,2)
             const material = new THREE.MeshLambertMaterial({
-                color: new THREE.Color(0xdd12ff ),
+                color: new THREE.Color(randnum(0xffffff,0) ),
             })
 
             this.Objects.push(new THREE.Mesh(geometry,material))
@@ -86,13 +86,12 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
         //d_light.position.set(0,10,0)
         //this.Scene.add(d_light)
         //d_light.target=this.Group
-        //const helper = new THREE.DirectionalLightHelper(d_light,5)
-        //this.Scene.add(helper)
 
+        const a_light = new THREE.AmbientLight(0xffffff)
+        a_light.position.set(0,10,0)
+        this.Scene.add(a_light)
         
-        //a_light.position.set(0,10,0)
-        
-        //this.Scene.add(this.Light)
+        this.Scene.add(this.Light)
 
     }
 
@@ -198,7 +197,7 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
         for (let i=0;i<this.Objects.length;i++){
             //XYZ-Vektor ermitteln
             cur_vector=this.Objects[i].position
-            if(this.Objects[i].position.x>1|| this.Objects[i].position.y>1||this.Objects[i].position.z>1){
+            if(this.Objects[i].position.x!=0|| this.Objects[i].position.y!=0||this.Objects[i].position.z!=0){
                 cur_vector.divideScalar(1+((1/this.Objects[i].position.distanceTo(null_vec))/2))
                 //cur_vector.subScalar(1)
                 this.Objects[i].position.set(cur_vector.x,cur_vector.y,cur_vector.z)
@@ -209,8 +208,10 @@ export class Cube_Scenary extends Scenaries<THREE.Mesh>{
                 this.Objects[i].position.z=randnum(100,-400)
             }
 
+            if (this.Objects[i].scale.z>1){
+                this.Objects[i].scale.z-=0.1
+            }
         }
-        
     }
 
     Animate_Reset(){
@@ -252,7 +253,8 @@ export class Sphere_Senary extends Scenaries<THREE.LineSegments>{
     }
 }
 
-export class freq_bar_Scenary extends Scenaries<THREE.Mesh>{
+//neues Szenario mit verbundenen Linien, nicht nur segmenten-> sieht bestimmt aus cool aus
+export class Freq_Bar_Scenary extends Scenaries<THREE.Mesh>{
 
     constructor(scene:THREE.Scene,camera:THREE.Camera,count:number){
         super(scene,camera,count)
@@ -269,13 +271,10 @@ export class freq_bar_Scenary extends Scenaries<THREE.Mesh>{
                 color: new THREE.Color("rgb(5,5,50)"),
                 wireframe: false 
             })
-
             this.Objects.push(new THREE.Mesh(geometry,material))
-
             this.Objects[i].position.x=-this.Object_Count/2 + i
             this.Objects[i].position.y=0
             this.Objects[i].position.z=-120
-
             this.Group.add(this.Objects[i])
         }
         this.Scene.add(this.Group)
@@ -300,9 +299,9 @@ export class freq_bar_Scenary extends Scenaries<THREE.Mesh>{
 
     public Animate_Reset() {
         super.Animate_Reset()
-
     }
 }
+
 
 export class helper_Scenary extends Scenaries<THREE.Mesh>{
     constructor(scene:THREE.Scene,camera:THREE.Camera,count=1){
@@ -347,20 +346,5 @@ export class helper_Scenary extends Scenaries<THREE.Mesh>{
         const cube = new THREE.Mesh(geometry,material)
         this.Scene.add(cube)
 
-    }
-}
-
-export class light_Scenary extends Scenaries<THREE.Mesh>{
-    constructor(scene:THREE.Scene,camera:THREE.Camera,count=1){
-        super(scene,camera,count)
-        this.Create_Objects()
-    }
-    protected Create_Objects(): void {
-        const light = new THREE.DirectionalLight(0x404040,0)
-        const helper = new THREE.DirectionalLightHelper(light,5)
-        light.add(helper)
-        var point_light = new THREE.PointLight(0xffffff, 1); 
-        point_light.position.set(100, 100, 0); 
-        this.Scene.add(light,point_light)
     }
 }
