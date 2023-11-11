@@ -82,14 +82,14 @@ export class Audio_Processing{
     }
     
     Toggle_Scene(flag:number){
-        let index:number=this.Szenarios[0].Enum_Method + flag
+        // let index:number=this.Szenarios[0].Enum_Method + flag
         
-        for(let i=0;i<this.Szenarios.length;i++){
-            if ((index<this.Enum_Leangth+1)&&(index>-1)){
-                this.Szenarios[i].Enum_Method=index
-            }
-            else{break;}
-        }
+        // for(let i=0;i<this.Szenarios.length;i++){
+        //     if ((index<this.Enum_Leangth+1)&&(index>-1)){
+        //         this.Szenarios[i].Enum_Method=index
+        //     }
+        //     else{break;}
+        // }
     }
 
     /** # Visualisierung steuern
@@ -111,10 +111,10 @@ export class Audio_Processing{
         }
         else
         {
-            //leerlauf-Animation
-            for(let i=0;i<this.Szenarios.length;i++){
-                this.Szenarios[i].Animate_Idle()
-            }
+            // //leerlauf-Animation
+            // for(let i=0;i<this.Szenarios.length;i++){
+            //     this.Szenarios[i].Animate_Idle()
+            // }
         }
     }
 }

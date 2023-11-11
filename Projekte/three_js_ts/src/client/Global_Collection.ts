@@ -50,6 +50,7 @@ export var randnum =(max=-1,min=1):number =>{
  *  - zum Unterscheiden nach Namen -> der Einfachkeit halber gegen Verwirrung
  */
 export enum Enum_Visual_Method{
+    Muster_Muster=-1,
     Muster0_std_kreis = 0,
     Muster1_invers_kreis,
     Muster2_raute,
