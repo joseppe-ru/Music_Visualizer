@@ -1,2 +1,3 @@
 # Music_Visualizer
-INT_Beleg_04
+BA Beleg für Prof. Sporer
+Musikisualisierer in Typescript mit HTML Oberfläche (Muskplayer)
