@@ -64,5 +64,6 @@ Alle wichtigen/eigensverfassten Dateien des Projektes sind zu finden unter:
   	 -> "npm install three @types/three webpack-cli webpack-dev-server webpack-merge ts-loader typescript postprocessing"
          -> bei weiterm fehler aufgrund fehlender Modulen, auf Fehlermeldung achten und ggf. selbst nachinstallieren
 
--> Fehler bei mobilen Apple-Geräten: Ton kann nicht abgespielt werden, der Rest funktioniert
+-> Fehler bei Apple-Ipads: Ton kann nicht abgespielt werden
+-> alle anderen getesteten Geräte funktionieren (Android 13 Handy, Windows 10 & 11 Rechner) mit (Chrome, Firefox, Safari, Opera) 
 
