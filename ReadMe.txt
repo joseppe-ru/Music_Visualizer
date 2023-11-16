@@ -1,4 +1,4 @@
-# Musik_visualisierer #
+# Musik_visualisierer
 
 Das ist die letzten Version unseres Musikvisualisierungsprogrammes.
 
