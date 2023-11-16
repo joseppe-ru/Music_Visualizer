@@ -1,3 +1,5 @@
+# Musik_visualisierer #
+
 Das ist die letzten Version unseres Musikvisualisierungsprogrammes.
 
 Das Projekt umfasst 2 Ordner:
