@@ -67,3 +67,5 @@ Alle wichtigen/eigensverfassten Dateien des Projektes sind zu finden unter:
 -> Fehler bei Apple-Ipads: Ton kann nicht abgespielt werden
 -> alle anderen getesteten Geräte funktionieren (Android 13 Handy, Windows 10 & 11 Rechner) mit (Chrome, Firefox, Safari, Opera) 
 
+Diese Formel in Typescript, wobei a =20000; m=0.035; s=fft_size
+-\ln\left(-x\cdot m+1+a\cdot m\right)\cdot\frac{a}{\ln\left(a\cdot m+1\right)}+a

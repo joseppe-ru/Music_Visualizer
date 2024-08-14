@@ -81,6 +81,39 @@ export class Audio_Processing{
         }
     }
 
+    get_log_FFT=(): Uint8Array => {
+
+        var fft_data = this.Analyzer.getFrequencyData()
+        const härte = 0.035 //Skalierungsfktor für Anstieg der kurve
+        const f_max = 20000   //Maximale frequenz (frequenzspanne / Bandbreite)
+        var s:number = f_max/this.FFT_Size // Schrittgröße (nrmales linieares Array)
+
+
+        var npv = (härte / Math.log(f_max * härte + 1)) + härte //Null Punkt Verschiebung
+        var offset = 1 + f_max * härte
+
+        var logData = new Uint8Array(this.FFT_Size);
+ 
+
+        for (let i_log=0;i_log<this.FFT_Size;i_log++){
+
+// 1.) i_log -> f ; doppelt inverse Logarithmische Funktion berechnen
+            const log_fn = -Math.log(-i_log * härte + offset);
+            const f = log_fn * npv;
+
+// 2.) f -> i ; Startindex für linerae Interpolation berechnen
+            const i = Math.floor(f*s);
+
+// 3.) FFT[i] -> v_log (lineare interpolation von v auf ein beliebiges f mit vorherausgerechnetem Index, wi f bei fft_data dazwischenliegt)
+            const v_log = fft_data[i] + ( (fft_data[i+1]-fft_data[i]) / ((i+1) *s) - (i*s) ) * f - i*s;
+
+// 4.) Speichern
+            logData[i_log] = Math.max(0, Math.min(255, Math.floor(v_log)));
+        }
+        console.log(logData);
+        return logData
+    }
+
     /** # Visualisierung steuern
      *  - idle (wenn keine Musik spielt)
      *  - Visualisierung (wenn Musik spielt)
@@ -91,7 +124,8 @@ export class Audio_Processing{
         if(this.Music.isPlaying){
 
             //FFT-Analyse 
-            var data = this.Analyzer.getFrequencyData()
+            // var data = this.Analyzer.getFrequencyData()
+            var data = this.get_log_FFT();
             var freq = this.Analyzer.getAverageFrequency()
             //Darstellung der analysierten Daten
             for(let i=0;i<this.Szenarios.length;i++){
@@ -116,12 +150,15 @@ export class Audio_Processing{
  * 2.) Frequenzbereiche Bestimmen (Indizes) für Subbass, Bass, Mitten, Höhen...
  */
 
-function logScaleFFT(data: number[], minFreq: number, maxFreq: number, size: number): number[] {
-    const logData = [];
-    for (let i = 0; i < size; i++) {
-        const logIndex = minFreq * Math.pow(maxFreq / minFreq, i / (size - 1));
-        const value = interpolate(logIndex, data);
-        logData.push(value);
-    }
-    return logData;
-}
+//function logScaleFFT(): number[] {
+//    const logData = [];
+//    var fft = Analyzer.getFrequencyData()
+//
+//
+//    for (let i = 0; i < size; i++) {
+//        const logIndex = minFreq * Math.pow(maxFreq / minFreq, i / (size - 1));
+//        const value = interpolate(logIndex, data);
+//        logData.push(value);
+//    }
+//    return logData;
+//}
