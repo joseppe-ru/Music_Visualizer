@@ -38,18 +38,18 @@ const listener = new THREE.AudioListener()
 camera.add(listener)
 
 //Orbital control (bewegen im Raum - nur debugging)
-const Orbital_controlls= new OrbitControls(camera, renderer.domElement);
+new OrbitControls(camera, renderer.domElement);
 
 //-----------------
 // # Eigene Klassen
 //-----------------
-const fft_size=2048
+const fft_size=1024
     //Liste aller Initialisierten Visualisierungs-Szenarien
 var scenaries:Scenaries<THREE.Object3D>[]=[]
 
     //Visualisierungs-Szenario: mit pulsierenden Würfeln
-// const cube_scene_1 = new Cube_Scenary(scene,camera, fft_size/8,50,Enum_Visual_Method.Vis_Mitten)
-// scenaries.push(cube_scene_1)
+const cube_scene_1 = new Cube_Scenary(scene,camera, fft_size,50,Enum_Visual_Method.Vis_Mitten)
+scenaries.push(cube_scene_1)
 
 // const cube_scene_2 = new Cube_Scenary(scene,camera,22,0,Enum_Visual_Method.Vis_Bass)
 // scenaries.push(cube_scene_2)
@@ -57,8 +57,8 @@ var scenaries:Scenaries<THREE.Object3D>[]=[]
 // const cube_scene_3 = new Cube_Scenary(scene,camera,100,2500,Enum_Visual_Method.Vis_Höhen)
 // scenaries.push(cube_scene_3)
 
-const cube_scene_4 = new Cube_Scenary(scene,camera, fft_size/8,50,Enum_Visual_Method.Muster8_schmal_auge)
-scenaries.push(cube_scene_4)
+//const cube_scene_4 = new Cube_Scenary(scene,camera, fft_size/8,50,Enum_Visual_Method.Muster8_schmal_auge)
+//scenaries.push(cube_scene_4)
 
 // const bass_lines = new Bass_Line(scene,camera,50)
 // scenaries.push(bass_lines)
@@ -67,8 +67,8 @@ const camera_control = new Camera_Control(scene,camera,0,0,Enum_Visual_Method.Vi
 scenaries.push(camera_control)
 
     //Visualisierungs-Szenario: Frequenzgang mit Balken
-const freq_bar_scene = new Freq_Bar_Scenary(scene,camera,fft_size*(1/3),0,Enum_Visual_Method.Vis_Mitten)
-scenaries.push(freq_bar_scene)
+//const freq_bar_scene = new Freq_Bar_Scenary(scene,camera,fft_size,0,Enum_Visual_Method.Vis_Mitten)
+//scenaries.push(freq_bar_scene)
 
     //Initialisierung der Three.js Audio-API funktionen
 const visualizer = new Audio_Processing(listener,scenaries,fft_size)
@@ -89,9 +89,9 @@ function Animate() {
 }
 
 //disclaimer
-alert("Das ist die Belegarbeit in INT von Josia Rudolph und Martin Görner (SS04-2023-TI1) \n Viel Spaß mit unserem Musikvisualisierer XD \n Die Bedienelemente erscheinen am Oberen Fensterrand")
-
-alert("Disclaimer: Die von Uns verwendete Musik ist offiziell als NCS(no copyright sound) freigegeben")
+//alert("Das ist die Belegarbeit in INT von Josia Rudolph und Martin Görner (SS04-2023-TI1) \n Viel Spaß mit unserem Musikvisualisierer XD \n Die Bedienelemente erscheinen am Oberen Fensterrand")
+//
+//alert("Disclaimer: Die von Uns verwendete Musik ist offiziell als NCS(no copyright sound) freigegeben")
 
 //Animationsschleife starten (Einstiegspunkt)
 Animate()

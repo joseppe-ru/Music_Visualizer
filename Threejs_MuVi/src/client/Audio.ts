@@ -89,7 +89,7 @@ export class Audio_Processing{
         var s:number = f_max/this.FFT_Size // Schrittgröße (nrmales linieares Array)
 
 
-        var npv = (härte / Math.log(f_max * härte + 1)) + härte //Null Punkt Verschiebung
+        var npv = (f_max / Math.log(f_max * härte + 1)) //Null Punkt Verschiebung
         var offset = 1 + f_max * härte
 
         var logData = new Uint8Array(this.FFT_Size);
@@ -99,7 +99,7 @@ export class Audio_Processing{
 
 // 1.) i_log -> f ; doppelt inverse Logarithmische Funktion berechnen
             const log_fn = -Math.log(-i_log * härte + offset);
-            const f = log_fn * npv;
+            const f = log_fn * npv + f_max;
 
 // 2.) f -> i ; Startindex für linerae Interpolation berechnen
             const i = Math.floor(f*s);
@@ -110,7 +110,7 @@ export class Audio_Processing{
 // 4.) Speichern
             logData[i_log] = Math.max(0, Math.min(255, Math.floor(v_log)));
         }
-        console.log(logData);
+        // console.log(logData);
         return logData
     }
 
